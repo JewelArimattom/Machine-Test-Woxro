@@ -1,8 +1,17 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #d6d6db;
+  --foreground: #172033;
+  --surface: #f2f2f4;
+  --panel-border: #9aa0a8;
+  --primary: #215de5;
+  --primary-strong: #1c4cc2;
+  --text-soft: #66748c;
+  --active-bg: #cef2da;
+  --active-text: #177844;
+  --inactive-bg: #ffd8dc;
+  --inactive-text: #b91e2f;
 }
 
 @theme inline {
@@ -12,15 +21,238 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+body {
+  margin: 0;
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at 15% 15%, rgba(255, 255, 255, 0.5), transparent 45%),
+    radial-gradient(circle at 80% 10%, rgba(204, 228, 255, 0.55), transparent 35%),
+    linear-gradient(180deg, #d8d8de 0%, #d1d1d7 100%);
+  color: var(--foreground);
+  font-family: "Trebuchet MS", "Avenir Next", "Segoe UI", sans-serif;
+}
+
+.user-page {
+  min-height: 100vh;
+  padding: 44px 16px;
+}
+
+.user-shell {
+  width: min(1100px, 100%);
+  margin: 0 auto;
+  background: color-mix(in srgb, var(--surface) 95%, white 5%);
+  border-radius: 12px;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  box-shadow: 0 8px 20px rgba(31, 42, 65, 0.12);
+  padding: 24px 24px 22px;
+  animation: settle-in 500ms ease-out;
+}
+
+.user-title {
+  margin: 0 0 22px;
+  text-align: center;
+  font-size: clamp(1.6rem, 2.1vw, 2rem);
+  letter-spacing: 0.01em;
+}
+
+.user-form {
+  display: grid;
+  grid-template-columns: minmax(160px, 1fr) 100px 84px;
+  gap: 10px;
+  margin-bottom: 22px;
+}
+
+.text-input,
+.age-input {
+  height: 42px;
+  border: 2px solid var(--panel-border);
+  border-radius: 8px;
+  padding: 0 12px;
+  font-size: 1rem;
+  outline: none;
+  background: #f8f8fa;
+}
+
+.text-input:focus,
+.age-input:focus {
+  border-color: #336ce8;
+  box-shadow: 0 0 0 3px rgba(33, 93, 229, 0.12);
+}
+
+.user-list {
+  display: grid;
+  gap: 16px;
+}
+
+.empty-state {
+  margin: 0;
+  border: 1px dashed var(--panel-border);
+  border-radius: 10px;
+  padding: 22px;
+  text-align: center;
+  color: var(--text-soft);
+  background: rgba(255, 255, 255, 0.45);
+}
+
+.user-card {
+  border: 1.5px solid var(--panel-border);
+  border-radius: 10px;
+  background: #f3f3f6;
+  padding: 16px;
+  animation: card-enter 280ms ease-out;
+}
+
+.user-card-top {
+  display: flex;
+  justify-content: space-between;
+  gap: 14px;
+  align-items: flex-start;
+}
+
+.user-name {
+  margin: 0;
+  font-size: 1.46rem;
+  font-weight: 600;
+}
+
+.user-age {
+  margin: 4px 0 0;
+  font-size: 1.05rem;
+  color: var(--text-soft);
+}
+
+.status-badge {
+  border-radius: 999px;
+  padding: 6px 14px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  line-height: 1;
+}
+
+.status-badge.active {
+  background: var(--active-bg);
+  color: var(--active-text);
+}
+
+.status-badge.inactive {
+  background: var(--inactive-bg);
+  color: var(--inactive-text);
+}
+
+.user-actions {
+  margin-top: 14px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.primary-btn,
+.secondary-btn,
+.dark-btn,
+.ghost-btn {
+  height: 38px;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  padding: 0 16px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 120ms ease, filter 120ms ease;
+}
+
+.primary-btn {
+  background: var(--primary);
+  color: #fff;
+}
+
+.secondary-btn {
+  border-color: #5a6678;
+  background: #f7f7f8;
+  color: #1f2c3f;
+}
+
+.dark-btn {
+  background: #1d2a40;
+  color: #fff;
+}
+
+.ghost-btn {
+  border-color: #8895a9;
+  color: #4f5f78;
+  background: transparent;
+}
+
+.primary-btn:hover,
+.secondary-btn:hover,
+.dark-btn:hover,
+.ghost-btn:hover {
+  transform: translateY(-1px);
+  filter: brightness(0.97);
+}
+
+.primary-btn:active,
+.secondary-btn:active,
+.dark-btn:active,
+.ghost-btn:active {
+  transform: translateY(0);
+}
+
+.primary-btn:hover {
+  background: var(--primary-strong);
+}
+
+.edit-grid {
+  display: grid;
+  grid-template-columns: minmax(130px, 1fr) 96px;
+  gap: 10px;
+}
+
+@keyframes settle-in {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@keyframes card-enter {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 680px) {
+  .user-page {
+    padding: 24px 10px;
+  }
+
+  .user-shell {
+    padding: 18px 14px;
+  }
+
+  .user-form {
+    grid-template-columns: 1fr;
+  }
+
+  .edit-grid {
+    grid-template-columns: 1fr;
+    width: 100%;
+  }
+
+  .user-card-top {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .status-badge {
+    width: fit-content;
+  }
 }
